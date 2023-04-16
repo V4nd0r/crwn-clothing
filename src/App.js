@@ -1,3 +1,4 @@
+import './styles/__categories.scss';
 
 const App = () => {
   
