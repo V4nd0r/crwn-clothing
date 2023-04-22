@@ -25,7 +25,7 @@ const provider = new GoogleAuthProvider();
     prompt: "select_account"
   });
 
-  export const createUserDocumentFromAuth = async (userAuth) => {
+  export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {} ) => {
     if (!userAuth) return;
 
     const userDocRef = doc(db, 'users', userAuth.uid);
@@ -45,7 +45,8 @@ const provider = new GoogleAuthProvider();
         await setDoc(userDocRef, {
           displayName,
           email,
-          createdAt
+          createdAt,
+          ...additionalInformation,
         });
       } catch (error) {
         console.log('error crearing the user', error.message);
