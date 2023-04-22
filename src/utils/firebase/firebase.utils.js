@@ -1,5 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, 
+        signInWithPopup, 
+        GoogleAuthProvider, 
+        createUserWithEmailAndPassword
+      } from 'firebase/auth';
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore';
 
 //Firebase configuration
@@ -15,12 +19,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
+  //SIGN IN/LOGIN WITH GOOGLE
 const provider = new GoogleAuthProvider();
   provider.setCustomParameters({
     prompt: "select_account"
   });
 
   export const createUserDocumentFromAuth = async (userAuth) => {
+    if (!userAuth) return;
+
     const userDocRef = doc(db, 'users', userAuth.uid);
     console.log (userDocRef);
 
@@ -46,6 +53,13 @@ const provider = new GoogleAuthProvider();
     }
     //IF USER DATA EXISTS: return userDocRef
     return userDocRef;
+  };
+
+  //SIGN IN/LOGIN WITH E-MAIL AND PASSWORD
+  export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
   };
 
   export const auth = getAuth();
