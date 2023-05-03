@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect} from "react";
+import { createContext, useState} from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
     //see if cartItems contains productToAdd
@@ -22,25 +22,18 @@ export const CartContext = createContext({
     isCartOpen: false,
     setIsOpen: () => {},
     cartItems: [],
-    addItemToCart: () => {},
-    cartCount: 0
+    addItemToCart: () => {}
 });
 
 export const CartProvider = ({childen}) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
-    const [cartCount, setCartCount] = useState(0);
-
-    useEffect(() => {
-        const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0)
-        setCartCount(newCartCount);
-    }, [cartItems])
+    const [cartItems, setCartItems] =useState([]);
 
     const addItemToCart = (productToAdd) => {
         setCartItems(addCartItem (cartItems, productToAdd));
     }
 
-    const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems, cartCount };
+    const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems };
     return <CartContext.Provider value={value}>{childen}</CartContext.Provider>;
 
 };
