@@ -1,7 +1,4 @@
-//set up action types
-export const USER_ACTION_TYPES = {
-    'SET_CURRENT_USER': 'SET_CURRENT_USER'
-}
+import { USER_ACTION_TYPES } from "./user.types";
 
 //Defining initial state for reducer
 const INITIAL_STATE = {
