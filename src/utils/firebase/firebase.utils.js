@@ -84,6 +84,20 @@ const provider = new GoogleAuthProvider();
   //SIGN OUT
   export const signOutUser = async () => await signOut(auth);
 
+  //PROMIS BESED FLOW FOR SAGA
+  export const getCurrentUser = () => {
+    return new Promise((resolve, reject) =>{
+      const unsubscribe = onAuthStateChanged(
+        auth, 
+        (userAuth) => {
+          unsubscribe();
+          resolve(userAuth);
+        },
+        reject
+      );
+    });
+  };
+  
   //OBSERVER
   export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
 
